@@ -9,10 +9,11 @@ namespace AppMVCLogin.DataBase
 {
    public class Conexion
     {
-       public static SqlConnection getConnection()
+       public static SqlConnection getConnection(string stringCon)
        {
-           SqlConnection cn = new SqlConnection("database=Neptuno;server=.;integrated security=true");
-           return cn;
+           SqlConnection cn = new SqlConnection(stringCon);
+            //"database=Neptuno;server=.;integrated security=true"
+            return cn;
        }       
     }
 }
