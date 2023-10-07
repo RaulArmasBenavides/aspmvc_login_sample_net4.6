@@ -21,7 +21,7 @@ namespace AppMVCLogin.Controllers
             EmpleadoDao dao = new EmpleadoDao();
             try
             {
-                var usuario1 = dao.validar(usuario.Nombre, usuario.Apellidos);
+                var usuario1 = dao.validarLogin(usuario.Nombre, usuario.Apellidos);
                 if (usuario1 == null)
                 {
                     usuario.LoginErrorMessage = "El usuario o password es incorrecto.";
@@ -32,7 +32,7 @@ namespace AppMVCLogin.Controllers
                     //CREAR SESSION Y ASIGNAR VALORES
                     Session["userID"] = usuario.IdEmpleado;
                     Session["userName"] = usuario.Nombre;
-                    //Session["usuario"] = usuario1;
+                    Session["userLastName"] = usuario.Apellidos;
                     return RedirectToAction("Index", "Home");
                 }
             }

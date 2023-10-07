@@ -7,21 +7,17 @@ using System.Data.SqlClient;
 using AppMVCLogin.DataBase;
 using AppMVCLogin.Interfaces;
 using AppMVCLogin.Util;
+using System.Configuration;
 
 namespace AppMVCLogin.Models
 {
     public class EmpleadoDao : IEmpleadoDataAccess
-    {
-
-        //IDBConnection conex ;
-        //propiedad
-        //variables       
+    { 
         SqlCommand cmd = null;
         public string CadenaConexion { get; set; }
         public EmpleadoDao()
         {
-            //conex = new AccesoDB(CadenaConexion);
-            CadenaConexion = CustomXMLReader.leerConexion(); ;// ConfigurationManager.ConnectionStrings["neptuno"].ConnectionString;
+            CadenaConexion =  ConfigurationManager.ConnectionStrings["ModelNeptuno"].ConnectionString;
         }
 
         public void create(Empleado t)
@@ -34,7 +30,7 @@ namespace AppMVCLogin.Models
             throw new NotImplementedException();
         }
 
-        public Empleado findForId(Empleado t)
+        public Empleado findById(Empleado t)
         {
             throw new NotImplementedException();
         }
@@ -49,7 +45,7 @@ namespace AppMVCLogin.Models
             throw new NotImplementedException();
         }
 
-        public Empleado validar(string nombre, string apellido)
+        public Empleado validarLogin(string nombre, string apellido)
         {
             Empleado emp = null;
             try
@@ -61,7 +57,7 @@ namespace AppMVCLogin.Models
                     cmd.Parameters.AddWithValue("@Nombre", nombre);
                     cmd.Parameters.AddWithValue("@Apellido", apellido);
                     cn.Open();
-                    var dr = cmd.ExecuteReader();
+                    SqlDataReader dr = cmd.ExecuteReader();
                     if (dr.Read())
                     {
                         emp = new Empleado()
@@ -72,7 +68,6 @@ namespace AppMVCLogin.Models
                         };
 
                     }
-                    dr.Close();
                 }
             }
             catch (Exception ex)
